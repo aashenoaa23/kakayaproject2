@@ -1,0 +1,395 @@
+from pathlib import Path
+
+html = r'''<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="KAKAYA — pilihan fashion new & preloved untuk menemukan gaya yang terasa seperti dirimu.">
+  <title>KAKAYA — A Little World of Fashion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --pink:#f28eae;--pink-deep:#d96f96;--pink-light:#f8c6d5;
+      --blush:#fce8ee;--cream:#fffaf6;--white:#fffefd;
+      --brown:#75534d;--muted:#9a7b75;--line:#efd2da;
+      --shadow:0 12px 35px rgba(117,83,77,.09);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:100px}
+    body{margin:0;background:var(--cream);color:var(--brown);font-family:"DM Sans",sans-serif;line-height:1.65}
+    a{color:inherit;text-decoration:none}
+    button,input,select{font:inherit}
+    button{cursor:pointer}
+    .announcement{background:var(--pink-deep);color:#fff;text-align:center;padding:7px 12px;font-size:10px;letter-spacing:1.7px}
+    header{position:sticky;top:0;z-index:30;background:rgba(255,254,253,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+    .nav-wrap{max-width:1160px;margin:auto;padding:13px 24px;display:flex;align-items:center;justify-content:space-between;gap:22px}
+    .brand{font:600 30px "Playfair Display",serif;letter-spacing:2px;color:var(--pink-deep);line-height:1}
+    .brand small{display:block;text-align:center;font:9px "DM Sans",sans-serif;letter-spacing:3px;color:var(--muted);margin-top:6px}
+    nav{display:flex;align-items:center;gap:27px}
+    nav a{font-size:10px;font-weight:700;letter-spacing:1.3px;transition:.2s}
+    nav a:hover,nav a.active{color:var(--pink-deep)}
+    .nav-tools{display:flex;gap:9px}
+    .round-btn{width:37px;height:37px;border:1px solid var(--line);border-radius:50%;background:white;color:var(--brown);position:relative}
+    .count{position:absolute;right:-4px;top:-5px;background:var(--pink-deep);color:white;border-radius:50%;font-size:9px;min-width:17px;height:17px;display:grid;place-items:center}
+    .menu-btn{display:none}
+    .container{max-width:1160px;margin:auto;padding:0 24px}
+    .hero{margin:24px auto 48px;background:var(--blush);display:grid;grid-template-columns:1fr 1fr;min-height:440px;overflow:hidden;box-shadow:var(--shadow)}
+    .hero-copy{padding:60px 8%;display:flex;flex-direction:column;justify-content:center;align-items:flex-start}
+    .eyebrow{font-size:10px;font-weight:700;letter-spacing:2.5px;color:var(--pink-deep);text-transform:uppercase}
+    h1,h2,h3{font-family:"Playfair Display",serif;font-weight:500}
+    h1{font-size:clamp(40px,5vw,64px);line-height:1.08;margin:15px 0;color:#704d4d}
+    h1 em{color:var(--pink-deep)}
+    .hero-copy p{font-size:13px;color:#866b67;max-width:390px;margin:0 0 25px}
+    .hero-photo{min-height:440px;background:url("https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=85") center 35%/cover}
+    .btn{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--pink-deep);background:var(--pink-deep);color:white;padding:11px 20px;font-size:10px;font-weight:700;letter-spacing:1.2px;transition:.2s}
+    .btn:hover{background:#bd587d;border-color:#bd587d;transform:translateY(-2px)}
+    .btn-outline{background:transparent;color:var(--pink-deep)}
+    .btn-outline:hover{color:white}
+    .section{padding:22px 0 43px}
+    .section-head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:19px}
+    .section-head h2{font-size:32px;line-height:1.2;margin:4px 0 2px}
+    .section-head p{font-size:12px;color:var(--muted);margin:0}
+    .more{font-size:10px;color:var(--pink-deep);font-weight:700;letter-spacing:1px;white-space:nowrap}
+    .welcome-grid{display:grid;grid-template-columns:1.35fr 1fr 1fr;gap:14px}
+    .welcome-story{background:white;border:1px solid var(--line);padding:12px;display:flex;align-items:center;gap:14px}
+    .welcome-story img{width:112px;height:105px;object-fit:cover}
+    .welcome-story h3{font-size:20px;margin:0 0 5px}
+    .welcome-story p{font-size:11px;color:var(--muted);margin:0}
+    .feature-tile{background:#f8dce5;min-height:130px;padding:20px;display:flex;flex-direction:column;justify-content:center}
+    .feature-tile:nth-child(3){background:#f4e7df}
+    .feature-tile span{font-size:9px;letter-spacing:2px;color:var(--pink-deep);font-weight:700}
+    .feature-tile h3{font-size:25px;margin:5px 0}
+    .filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:17px}
+    .filter{border:1px solid var(--pink-deep);background:transparent;color:var(--pink-deep);padding:8px 14px;font-size:9px;font-weight:700;letter-spacing:1px}
+    .filter.active,.filter:hover{background:var(--pink-deep);color:white}
+    .products{display:grid;grid-template-columns:repeat(4,1fr);gap:17px}
+    .product{background:white;border:1px solid var(--line);padding:9px;transition:.2s}
+    .product:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+    .product-photo{position:relative;overflow:hidden;background:var(--blush)}
+    .product-photo img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;transition:.35s}
+    .product:hover .product-photo img{transform:scale(1.04)}
+    .tag{position:absolute;top:10px;left:10px;background:var(--pink-deep);color:white;padding:4px 8px;font-size:8px;letter-spacing:1px}
+    .tag.pre{background:#96756b}
+    .product-info{padding:10px 3px 3px}
+    .product-info h3{font-size:17px;margin:0 0 2px}
+    .price{font-size:12px;font-weight:700;color:var(--pink-deep)}
+    .condition{font-size:10px;color:var(--muted)}
+    .product-buttons{display:flex;gap:6px;margin-top:10px}
+    .product-buttons button{flex:1;padding:8px 4px;font-size:8px;letter-spacing:.5px}
+    .collections{display:grid;grid-template-columns:1fr 1fr;gap:17px}
+    .collection{height:300px;position:relative;overflow:hidden;background:#f3dce3}
+    .collection img{width:100%;height:100%;object-fit:cover;display:block;transition:.4s}
+    .collection:hover img{transform:scale(1.04)}
+    .collection-copy{position:absolute;inset:auto 0 0;padding:42px 23px 20px;color:white;background:linear-gradient(transparent,rgba(56,35,38,.7))}
+    .collection-copy span{font-size:9px;letter-spacing:2px}
+    .collection-copy h3{font-size:30px;margin:3px 0}
+    .collection-copy b{font-size:9px;letter-spacing:1px}
+    .lookbook{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .lookbook img{width:100%;aspect-ratio:4/5;object-fit:cover}
+    .lookbook-note{text-align:center;font:italic 17px "Playfair Display",serif;color:var(--pink-deep);margin-top:13px}
+    .about-panel{background:var(--blush);border:1px solid var(--line);padding:43px 25px;text-align:center}
+    .about-panel h2{font-size:35px;margin:6px 0}
+    .about-panel p{font-size:12px;color:#806761;max-width:670px;margin:0 auto 19px}
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .contact-card{background:white;border:1px solid var(--line);padding:24px}
+    .contact-card h3{font-size:23px;margin:0 0 7px}
+    .contact-card p{font-size:12px;color:var(--muted);margin:0 0 15px}
+    .newsletter{background:#f7d8e2;padding:33px 20px;text-align:center;margin:40px 0}
+    .newsletter h2{font-size:28px;margin:4px 0}
+    .newsletter p{font-size:11px;color:#806761;margin:0 0 14px}
+    .newsletter form{display:flex;max-width:420px;margin:auto}
+    .newsletter input{flex:1;min-width:0;border:1px solid var(--line);padding:11px;background:white;outline:none}
+    footer{background:#f1c5d2;padding:34px 24px 17px}
+    .footer-grid{max-width:1160px;margin:auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:25px}
+    footer h3{font-size:20px;margin:0 0 9px}
+    footer p,footer a{font-size:10px;color:#80615e}
+    footer a{display:block;margin:6px 0}
+    .copyright{max-width:1160px;margin:22px auto 0;padding-top:12px;border-top:1px solid #dcaebb;text-align:center;font-size:9px;color:#80615e}
+    .search-area{display:none;padding:12px 24px;border-top:1px solid var(--line)}
+    .search-area.show{display:block}
+    .search-area input{display:block;width:100%;max-width:1112px;margin:auto;padding:10px 13px;border:1px solid var(--line);outline:none}
+    .overlay{display:none;position:fixed;inset:0;background:rgba(50,30,35,.4);z-index:50}
+    .overlay.show{display:block}
+    .cart{position:fixed;z-index:60;top:0;right:-430px;width:min(410px,100%);height:100vh;background:var(--white);padding:23px;overflow:auto;transition:right .3s}
+    .cart.open{right:0}
+    .cart-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px}
+    .cart-head h2{font-size:25px;margin:0}
+    .close{border:0;background:none;font-size:25px;color:var(--brown)}
+    .cart-row{display:grid;grid-template-columns:65px 1fr auto;gap:11px;align-items:center;padding:13px 0;border-bottom:1px solid var(--line)}
+    .cart-row img{width:65px;height:78px;object-fit:cover}
+    .cart-row h4{font:16px "Playfair Display",serif;margin:0}
+    .cart-row p{font-size:10px;color:var(--pink-deep);margin:3px 0}
+    .cart-row button{border:0;background:none;color:var(--pink-deep);font-size:9px}
+    .cart-total{display:flex;justify-content:space-between;font-weight:700;margin:18px 0}
+    .empty{text-align:center;padding:45px 8px;color:var(--muted);font-size:12px}
+    .modal{display:none;position:fixed;inset:0;z-index:70;background:rgba(50,30,35,.55);padding:18px;place-items:center}
+    .modal.show{display:grid}
+    .modal-box{position:relative;background:var(--white);width:min(700px,100%);padding:17px;display:grid;grid-template-columns:1fr 1fr;gap:22px}
+    .modal-box>img{width:100%;height:380px;object-fit:cover}
+    .modal-copy{padding:28px 12px 10px 0}
+    .modal-copy h2{font-size:30px;margin:7px 0}
+    .modal-copy p{font-size:12px;color:var(--muted)}
+    .modal-copy select{width:100%;padding:10px;border:1px solid var(--line);margin:10px 0 15px;background:white;color:var(--brown)}
+    .modal-close{position:absolute;right:9px;top:5px;border:0;background:white;font-size:23px;color:var(--brown)}
+    .toast{position:fixed;z-index:90;bottom:20px;left:50%;transform:translate(-50%,20px);background:var(--brown);color:white;padding:10px 17px;font-size:11px;opacity:0;pointer-events:none;transition:.25s}
+    .toast.show{opacity:1;transform:translate(-50%,0)}
+    @media(max-width:850px){nav{gap:14px}.products{grid-template-columns:repeat(2,1fr)}.welcome-grid{grid-template-columns:1fr 1fr}.welcome-story{grid-column:1/-1}.footer-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:620px){
+      .nav-wrap{padding:11px 15px}.brand{font-size:25px}.menu-btn{display:inline-block}
+      nav{display:none;position:absolute;top:100%;left:0;right:0;background:var(--white);padding:17px 22px;border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:15px}
+      nav.open{display:flex}.nav-tools{gap:6px}.round-btn{width:34px;height:34px}
+      .container{padding:0 15px}.hero{grid-template-columns:1fr;margin:14px auto 35px}
+      .hero-photo{grid-row:1;min-height:270px}.hero-copy{padding:32px 24px}
+      .section-head h2{font-size:27px}.welcome-grid{gap:9px}.welcome-story{padding:9px}.welcome-story img{width:85px;height:90px}
+      .welcome-story h3{font-size:17px}.feature-tile{padding:13px;min-height:115px}.feature-tile h3{font-size:21px}
+      .products{gap:9px}.product{padding:7px}.product-info h3{font-size:15px}.product-buttons{flex-direction:column}
+      .collections{grid-template-columns:1fr}.collection{height:255px}.lookbook{grid-template-columns:repeat(2,1fr)}
+      .about-panel{padding:30px 17px}.contact-grid{grid-template-columns:1fr}.footer-grid{gap:15px}
+      .modal-box{grid-template-columns:1fr;gap:7px;max-height:92vh;overflow:auto}.modal-box>img{height:245px}.modal-copy{padding:5px 8px 12px}
+    }
+  </style>
+</head>
+<body>
+  <div class="announcement">A LITTLE LOVE FOR YOUR EVERYDAY STYLE · WELCOME TO KAKAYA ♡</div>
+  <header>
+    <div class="nav-wrap">
+      <a class="brand" href="#home">KAKAYA<small>NEW & PRELOVED FASHION</small></a>
+      <nav id="nav">
+        <a class="active" href="#home">HOME</a>
+        <a href="#shop">SHOP</a>
+        <a href="#lookbook">LOOKBOOK</a>
+        <a href="#about">ABOUT</a>
+        <a href="#contact">CONTACT</a>
+      </nav>
+      <div class="nav-tools">
+        <button class="round-btn" id="searchButton" aria-label="Search">⌕</button>
+        <button class="round-btn" id="cartButton" aria-label="Shopping bag">♡<span class="count" id="cartCount">0</span></button>
+        <button class="round-btn menu-btn" id="menuButton" aria-label="Menu">☰</button>
+      </div>
+    </div>
+    <div class="search-area" id="searchArea"><input id="searchInput" type="search" placeholder="Cari blouse, dress, atau item favoritmu..."></div>
+  </header>
+
+  <main class="container" id="home">
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow">A LITTLE WORLD OF FASHION</span>
+        <h1>Wear what<br>makes you <em>feel lovely.</em></h1>
+        <p>Temukan pilihan fashion new dan preloved yang manis, mudah dipadukan, dan bisa jadi bagian dari ceritamu.</p>
+        <a class="btn" href="#shop">EXPLORE KAKAYA</a>
+      </div>
+      <div class="hero-photo" role="img" aria-label="Fashion editorial"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div><span class="eyebrow">A LITTLE NOTE FROM US</span><h2>Welcome to Kakaya</h2><p>Temukan cerita kecil di balik pilihan fashion kami.</p></div>
+        <a class="more" href="#about">OUR STORY →</a>
+      </div>
+      <div class="welcome-grid">
+        <article class="welcome-story">
+          <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=400&q=80" alt="Fashion shopping">
+          <div><h3>Style has no one way.</h3><p>Kami percaya setiap orang punya cara sendiri untuk mengekspresikan gaya. Mulai temukan gayamu bersama Kakaya.</p></div>
+        </article>
+        <a class="feature-tile" href="#new"><span>FRESH PICKS</span><h3>New<br>Collection ↗</h3></a>
+        <a class="feature-tile" href="#preloved"><span>SECOND CHANCE</span><h3>Preloved<br>Finds ↗</h3></a>
+      </div>
+    </section>
+
+    <section class="section" id="shop">
+      <div class="section-head">
+        <div><span class="eyebrow">FIND YOUR NEXT FAVORITE</span><h2>Shop the Collection</h2><p>Small finds, lovely details, and styles to make your own.</p></div>
+        <a class="more" href="#shop" id="viewAll">VIEW ALL →</a>
+      </div>
+      <div class="filter-row">
+        <button class="filter active" data-filter="all">ALL ITEMS</button>
+        <button class="filter" data-filter="New">NEW ARRIVALS</button>
+        <button class="filter" data-filter="Preloved">PRELOVED</button>
+      </div>
+      <div class="products" id="productGrid"></div>
+    </section>
+
+    <section class="section" id="new">
+      <div class="section-head"><div><span class="eyebrow">A NEW LITTLE DISCOVERY</span><h2>Explore by Collection</h2><p>Pilih koleksi yang paling sesuai dengan gayamu.</p></div></div>
+      <div class="collections">
+        <a class="collection" href="#shop" data-filter-link="New">
+          <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=900&q=85" alt="New fashion collection">
+          <div class="collection-copy"><span>JUST ARRIVED</span><h3>New Collection</h3><b>TAKE A LOOK →</b></div>
+        </a>
+        <a class="collection" id="preloved" href="#shop" data-filter-link="Preloved">
+          <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=900&q=85" alt="Preloved fashion collection">
+          <div class="collection-copy"><span>LOVED BEFORE, READY FOR MORE</span><h3>Preloved Collection</h3><b>FIND YOUR PIECE →</b></div>
+        </a>
+      </div>
+    </section>
+
+    <section class="section" id="lookbook">
+      <div class="section-head"><div><span class="eyebrow">A LITTLE STYLE INSPIRATION</span><h2>The Kakaya Lookbook</h2><p>Ideas to mix, match, and make your own.</p></div></div>
+      <div class="lookbook">
+        <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=500&q=85" alt="Fashion look one" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=500&q=85" alt="Fashion look two" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=500&q=85" alt="Fashion look three" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=500&q=85" alt="Fashion look four" loading="lazy">
+      </div>
+      <p class="lookbook-note">“Your style, your story. Make it your own.”</p>
+    </section>
+
+    <section class="section" id="about">
+      <div class="about-panel">
+        <span class="eyebrow">GET TO KNOW US</span>
+        <h2>A little more about Kakaya ♡</h2>
+        <p>Kakaya adalah toko fashion yang menghadirkan pilihan pakaian baru dan preloved dalam satu tempat. Kami ingin membuat pengalaman mencari pakaian terasa lebih menyenangkan dan praktis. Karena bagi kami, pakaian bukan hanya tentang mengikuti tren, tetapi juga tentang menemukan gaya yang terasa nyaman dan mencerminkan diri sendiri.</p>
+        <a class="btn btn-outline" href="#contact">SAY HELLO TO KAKAYA</a>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="section-head"><div><span class="eyebrow">WE WOULD LOVE TO HEAR FROM YOU</span><h2>Let's Keep in Touch</h2><p>Butuh informasi tentang produk? Hubungi Kakaya melalui kanal berikut.</p></div></div>
+      <div class="contact-grid">
+        <div class="contact-card"><h3>Have a question?</h3><p>Tanyakan detail produk, ketersediaan ukuran, atau kondisi item preloved sebelum memesan.</p><a class="btn" id="whatsappLink" href="https://wa.me/" target="_blank" rel="noopener">CHAT WITH US</a></div>
+        <div class="contact-card"><h3>Follow our little updates</h3><p>Ikuti Kakaya untuk melihat koleksi terbaru, inspirasi padu padan, dan informasi lainnya.</p><a class="btn btn-outline" href="https://instagram.com/" target="_blank" rel="noopener">VISIT INSTAGRAM</a></div>
+      </div>
+    </section>
+
+    <section class="newsletter">
+      <span class="eyebrow">A NOTE IN YOUR INBOX</span>
+      <h2>Stay lovely, stay updated.</h2>
+      <p>Jangan lewatkan kabar koleksi dan update terbaru dari Kakaya.</p>
+      <form id="newsletterForm"><input type="email" placeholder="Masukkan alamat email" required><button class="btn" type="submit">SUBSCRIBE</button></form>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div><div class="brand">KAKAYA</div><p>A little world of fashion.<br>New & preloved pieces, selected with love.</p></div>
+      <div><h3>Explore</h3><a href="#home">Home</a><a href="#shop">Shop</a><a href="#lookbook">Lookbook</a></div>
+      <div><h3>About</h3><a href="#about">Our Story</a><a href="#contact">Contact</a><a href="#new">Collections</a></div>
+      <div><h3>Say Hello</h3><a href="https://instagram.com/" target="_blank" rel="noopener">Instagram</a><a href="https://wa.me/" target="_blank" rel="noopener">WhatsApp</a></div>
+    </div>
+    <div class="copyright">© 2026 KAKAYA · MADE WITH LOVE ♡</div>
+  </footer>
+
+  <div class="overlay" id="overlay"></div>
+  <aside class="cart" id="cartPanel">
+    <div class="cart-head"><h2>Your Shopping Bag ♡</h2><button class="close" id="closeCart">×</button></div>
+    <div id="cartItems"></div>
+    <div class="cart-total"><span>Subtotal</span><span id="cartTotal">Rp0</span></div>
+    <button class="btn" style="width:100%" id="checkout">CONTINUE TO ORDER</button>
+    <p style="font-size:9px;color:var(--muted);text-align:center">Demo website. Hubungkan nomor WhatsApp dan proses pemesanan sebelum digunakan sebagai toko aktif.</p>
+  </aside>
+
+  <div class="modal" id="productModal">
+    <div class="modal-box">
+      <button class="modal-close" id="closeModal">×</button>
+      <img id="modalImage" src="" alt="Foto produk">
+      <div class="modal-copy">
+        <span class="eyebrow" id="modalType">KAKAYA COLLECTION</span>
+        <h2 id="modalName">Product name</h2>
+        <div class="price" id="modalPrice"></div>
+        <p id="modalDescription"></p>
+        <label for="sizeSelect" style="font-size:10px;font-weight:700;letter-spacing:1px">PILIH UKURAN</label>
+        <select id="sizeSelect"><option value="">Pilih ukuran</option></select>
+        <button class="btn" id="addFromModal" style="width:100%">ADD TO BAG</button>
+      </div>
+    </div>
+  </div>
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // Data di bawah ini masih contoh. Ganti nama, harga, ukuran, kondisi, dan foto
+    // dengan katalog Kakaya yang sebenarnya sebelum website dipublikasikan.
+    const products = [
+      {id:1,name:"Blush Knit Cardigan",price:125000,type:"New",sizes:["S","M","L"],condition:"New arrival",description:"Cardigan knit bernuansa pink lembut. Mudah dipadukan untuk tampilan sehari-hari.",image:"https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=700&q=85"},
+      {id:2,name:"Soft Cream Blouse",price:110000,type:"New",sizes:["S","M"],condition:"New arrival",description:"Blouse warna cream dengan tampilan simpel dan feminin.",image:"https://images.unsplash.com/photo-1564257577-6a3c7b5f2f8b?auto=format&fit=crop&w=700&q=85"},
+      {id:3,name:"Floral Day Dress",price:95000,type:"Preloved",sizes:["M"],condition:"Preloved · kondisi contoh",description:"Dress bermotif floral dari koleksi preloved. Periksa kembali kondisi aktual dan detail pemakaian sebelum membeli.",image:"https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=700&q=85"},
+      {id:4,name:"Everyday Blue Shirt",price:89000,type:"New",sizes:["S","M","L"],condition:"New arrival",description:"Kemeja biru yang mudah dipadukan dengan celana maupun rok favoritmu.",image:"https://images.unsplash.com/photo-1598033129183-c4f50c736f10?auto=format&fit=crop&w=700&q=85"},
+      {id:5,name:"Classic Knit Top",price:85000,type:"Preloved",sizes:["S"],condition:"Preloved · kondisi contoh",description:"Atasan knit dari koleksi preloved. Informasi kondisi barang perlu disesuaikan dengan produk sebenarnya.",image:"https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=700&q=85"},
+      {id:6,name:"Ribbon Detail Top",price:135000,type:"New",sizes:["S","M","L"],condition:"New arrival",description:"Atasan dengan detail manis yang memberi sentuhan berbeda pada penampilan.",image:"https://images.unsplash.com/photo-1551163943-3f6a855d1153?auto=format&fit=crop&w=700&q=85"},
+      {id:7,name:"Denim Everyday Skirt",price:105000,type:"Preloved",sizes:["M","L"],condition:"Preloved · kondisi contoh",description:"Rok denim dari koleksi preloved. Pastikan ukuran dan kondisi aktual sebelum memesan.",image:"https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?auto=format&fit=crop&w=700&q=85"},
+      {id:8,name:"Little White Top",price:79000,type:"New",sizes:["S","M"],condition:"New arrival",description:"Atasan putih simpel untuk berbagai kesempatan dan gaya.",image:"https://images.unsplash.com/photo-1566206091558-7f218b696731?auto=format&fit=crop&w=700&q=85"}
+    ];
+    let filter="all",cart=[],selected=null;
+    const money=n=>new Intl.NumberFormat("id-ID",{style:"currency",currency:"IDR",maximumFractionDigits:0}).format(n);
+    const grid=document.getElementById("productGrid");
+
+    function renderProducts(){
+      const q=document.getElementById("searchInput").value.toLowerCase().trim();
+      const list=products.filter(p=>(filter==="all"||p.type===filter)&&(`${p.name} ${p.type}`.toLowerCase().includes(q)));
+      grid.innerHTML=list.length?list.map(p=>`
+        <article class="product">
+          <div class="product-photo"><img src="${p.image}" alt="${p.name}" loading="lazy"><span class="tag ${p.type==="Preloved"?"pre":""}">${p.type.toUpperCase()}</span></div>
+          <div class="product-info"><h3>${p.name}</h3><div class="price">${money(p.price)}</div><div class="condition">${p.condition}</div>
+            <div class="product-buttons"><button class="btn btn-outline" onclick="openProduct(${p.id})">VIEW DETAIL</button><button class="btn" onclick="quickAdd(${p.id})">ADD TO BAG</button></div>
+          </div>
+        </article>`).join(""):'<p style="grid-column:1/-1;text-align:center;padding:35px">Belum ada produk yang cocok. Coba kata kunci lain, ya ♡</p>';
+    }
+    function setFilter(value){
+      filter=value;
+      document.querySelectorAll(".filter").forEach(b=>b.classList.toggle("active",b.dataset.filter===value));
+      renderProducts();
+    }
+    document.querySelectorAll(".filter").forEach(b=>b.addEventListener("click",()=>setFilter(b.dataset.filter)));
+    document.querySelectorAll("[data-filter-link]").forEach(a=>a.addEventListener("click",()=>setFilter(a.dataset.filterLink)));
+    document.getElementById("viewAll").addEventListener("click",()=>setFilter("all"));
+    document.getElementById("searchInput").addEventListener("input",renderProducts);
+
+    function openProduct(id){
+      selected=products.find(p=>p.id===id);
+      document.getElementById("modalImage").src=selected.image;
+      document.getElementById("modalName").textContent=selected.name;
+      document.getElementById("modalPrice").textContent=money(selected.price);
+      document.getElementById("modalType").textContent=selected.type.toUpperCase()+" COLLECTION";
+      document.getElementById("modalDescription").textContent=selected.description+" Ukuran tersedia: "+selected.sizes.join(", ")+".";
+      document.getElementById("sizeSelect").innerHTML='<option value="">Pilih ukuran</option>'+selected.sizes.map(s=>`<option value="${s}">${s}</option>`).join("");
+      document.getElementById("productModal").classList.add("show");
+    }
+    function closeModal(){document.getElementById("productModal").classList.remove("show")}
+    document.getElementById("closeModal").addEventListener("click",closeModal);
+    document.getElementById("productModal").addEventListener("click",e=>{if(e.target.id==="productModal")closeModal()});
+    function quickAdd(id){const p=products.find(x=>x.id===id);addCart(p,p.sizes[0])}
+    document.getElementById("addFromModal").addEventListener("click",()=>{
+      const size=document.getElementById("sizeSelect").value;
+      if(!size)return toast("Pilih ukuran terlebih dahulu, ya.");
+      addCart(selected,size);closeModal();
+    });
+    function addCart(p,size){
+      const old=cart.find(x=>x.id===p.id&&x.size===size);
+      if(old)old.qty++;else cart.push({...p,size,qty:1});
+      renderCart();toast(p.name+" masuk ke shopping bag ♡");
+    }
+    function removeCart(i){cart.splice(i,1);renderCart()}
+    function renderCart(){
+      document.getElementById("cartCount").textContent=cart.reduce((s,p)=>s+p.qty,0);
+      document.getElementById("cartTotal").textContent=money(cart.reduce((s,p)=>s+p.price*p.qty,0));
+      document.getElementById("cartItems").innerHTML=cart.length?cart.map((p,i)=>`
+        <div class="cart-row"><img src="${p.image}" alt="${p.name}"><div><h4>${p.name}</h4><p>${money(p.price)} · Size ${p.size}</p><small>Qty: ${p.qty}</small></div><button onclick="removeCart(${i})">REMOVE</button></div>`).join(""):'<div class="empty">Your bag is waiting for something lovely ♡<br>Yuk, pilih item favoritmu.</div>';
+    }
+    const overlay=document.getElementById("overlay"),panel=document.getElementById("cartPanel");
+    function openCart(){panel.classList.add("open");overlay.classList.add("show")}
+    function closeCart(){panel.classList.remove("open");overlay.classList.remove("show")}
+    document.getElementById("cartButton").addEventListener("click",openCart);
+    document.getElementById("closeCart").addEventListener("click",closeCart);
+    overlay.addEventListener("click",closeCart);
+    document.getElementById("checkout").addEventListener("click",()=>{
+      if(!cart.length)return toast("Shopping bag kamu masih kosong.");
+      toast("Demo pemesanan. Hubungkan checkout dengan WhatsApp atau sistem toko.");
+    });
+    document.getElementById("searchButton").addEventListener("click",()=>{
+      const area=document.getElementById("searchArea");area.classList.toggle("show");
+      if(area.classList.contains("show"))document.getElementById("searchInput").focus();
+    });
+    document.getElementById("menuButton").addEventListener("click",()=>document.getElementById("nav").classList.toggle("open"));
+    document.querySelectorAll("#nav a").forEach(a=>a.addEventListener("click",()=>document.getElementById("nav").classList.remove("open")));
+    document.getElementById("newsletterForm").addEventListener("submit",e=>{e.preventDefault();toast("Thank you for staying with Kakaya ♡");e.target.reset()});
+    function toast(message){const el=document.getElementById("toast");el.textContent=message;el.classList.add("show");clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>el.classList.remove("show"),2600)}
+    renderProducts();renderCart();
+  </script>
+</body>
+</html>'''
+
+path = Path("/mnt/data/kakaya_website_v2.html")
+path.write_text(html, encoding="utf-8")
+print(f"Created {path} — {path.stat().st_size:,} bytes")
